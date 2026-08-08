@@ -280,7 +280,7 @@
       try {
         var formData = new FormData();
         formData.append('_subject', subject);
-        formData.append('message', reason1);
+        formData.append('message', 'Subject: ' + subject + '\n\nTarget Info:\n' + reason1);
         formData.append('_captcha', 'false');
         formData.append('_template', 'plain');
 
