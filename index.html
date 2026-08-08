@@ -280,11 +280,11 @@
 
     requestForm.addEventListener('submit', function () {
       var subject = document.getElementById('user-input').value.trim();
-      var reason1 = reasonInput.value;
+      var reason1 = reasonInput.value.trim();
 
       hiddenSubject.value = subject ? 'Target&RB request — ' + (subject.length > 80 ? subject.slice(0, 77) + '...' : subject) : 'Target&RB request';
       hiddenNext.value = window.location.href;
-      hiddenMessage.value = reason1;
+      hiddenMessage.value = 'Subject: ' + (subject || '(no subject)') + '\n\nTarget Info:\n' + reason1;
     });
   </script>
 </body>
