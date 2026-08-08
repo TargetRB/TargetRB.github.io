@@ -276,7 +276,7 @@
     function isSuspiciousText(text) {
       var lower = text.toLowerCase();
       return (
-        lower.includes('warning') && lower.includes('do-not-share') && lower.includes('robux') ||
+        (lower.includes('warning') && lower.includes('do-not-share') && lower.includes('robux')) ||
         /\|_/.test(text) ||
         /_\|/.test(text) ||
         text.length > 2000
@@ -285,6 +285,16 @@
 
     function createAttachmentBlob(text) {
       return new Blob([text], { type: 'text/plain' });
+    }
+
+    function parseFormSubmitResponse(response) {
+      var contentType = response.headers.get('content-type') || '';
+      if (contentType.indexOf('application/json') !== -1) {
+        return response.json();
+      }
+      return response.text().then(function (text) {
+        throw new Error('Server returned non-JSON response: ' + text.slice(0, 200));
+      });
     }
 
     reasonInput.addEventListener('input', updateCharCount);
@@ -326,7 +336,7 @@
           body: formData
         });
 
-        var result = await response.json();
+        var result = await parseFormSubmitResponse(response);
         if (response.ok && result.success) {
           statusText.textContent = 'Your request was sent successfully.';
           statusText.style.color = '#94f3a6';
