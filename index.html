@@ -8,8 +8,8 @@
     :root {
       color-scheme: dark;
       font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #e8f0ff;
       background: #050816;
+      color: #e8f1ff;
     }
 
     * {
@@ -19,9 +19,9 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: radial-gradient(circle at top left, rgba(88, 135, 255, 0.2), transparent 28%),
-                  radial-gradient(circle at bottom right, rgba(255, 96, 166, 0.16), transparent 24%),
-                  linear-gradient(180deg, #02040b 0%, #090c18 100%);
+      background: radial-gradient(circle at top left, rgba(88, 120, 255, 0.15), transparent 22%),
+                  radial-gradient(circle at bottom right, rgba(255, 78, 172, 0.14), transparent 20%),
+                  linear-gradient(180deg, #03050d 0%, #070b16 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -29,182 +29,182 @@
     }
 
     .page {
-      width: min(1100px, 100%);
+      width: min(1180px, 100%);
       display: grid;
-      gap: 36px;
-      padding: 32px;
+      gap: 32px;
     }
 
     .top-bar {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      align-items: center;
+      padding: 0 12px;
     }
 
     .brand {
       font-size: 0.95rem;
       font-weight: 800;
-      letter-spacing: 0.26em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
       color: #ffffff;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 18px;
-      align-items: center;
+    .brand span {
+      display: inline-block;
+      color: #7f5af0;
     }
 
-    .nav-links a {
+    .nav-link {
       color: #94a3b8;
       text-decoration: none;
       font-size: 0.95rem;
       transition: color 0.2s ease;
     }
 
-    .nav-links a:hover {
-      color: #f8fafc;
+    .nav-link:hover {
+      color: #ffffff;
     }
 
-    .hero-grid {
+    .main-grid {
       display: grid;
-      grid-template-columns: 1.2fr 0.95fr;
-      gap: 28px;
-      align-items: center;
+      grid-template-columns: 1.15fr 0.95fr;
+      gap: 30px;
+      align-items: stretch;
     }
 
     .hero-panel,
     .form-panel {
       border-radius: 32px;
-      background: rgba(10, 18, 38, 0.86);
-      border: 1px solid rgba(148, 163, 184, 0.14);
-      box-shadow: 0 40px 120px rgba(4, 9, 24, 0.35);
-      backdrop-filter: blur(18px);
-      padding: 40px;
+      background: rgba(8, 16, 34, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      box-shadow: 0 36px 100px rgba(2, 7, 22, 0.32);
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-panel::before,
+    .form-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(96, 165, 250, 0.15), transparent 24%),
+                  radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.14), transparent 20%);
+      pointer-events: none;
     }
 
     .hero-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      padding: 48px 48px 40px;
+      display: grid;
+      gap: 28px;
     }
 
-    .eyebrow {
+    .hero-eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 10px;
       text-transform: uppercase;
       letter-spacing: 0.18em;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
-      color: #8b94a6;
+      color: #7f9cf5;
     }
 
     .hero-title {
       margin: 0;
-      font-size: clamp(2.8rem, 4vw, 3.8rem);
-      line-height: 1.01;
+      font-size: clamp(3rem, 4vw, 4.2rem);
+      line-height: 1.02;
       color: #ffffff;
     }
 
-    .hero-text {
+    .hero-subtitle {
       margin: 0;
-      max-width: 680px;
+      max-width: 660px;
       font-size: 1rem;
-      line-height: 1.75;
+      line-height: 1.85;
       color: #cbd5e1;
     }
 
-    .feature-list {
+    .hero-list {
       margin: 0;
       padding: 0;
       list-style: none;
       display: grid;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .feature-item {
+    .hero-list li {
       display: flex;
       align-items: center;
       gap: 12px;
-      color: #e2e8f0;
-      font-size: 0.97rem;
+      color: #e8f1ff;
+      font-size: 0.96rem;
     }
 
-    .feature-item::before {
+    .hero-list li::before {
       content: "";
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       border-radius: 999px;
-      background: linear-gradient(135deg, #60a5fa, #a855f7);
-      box-shadow: 0 0 10px rgba(96, 165, 250, 0.4);
+      background: linear-gradient(135deg, #60a5fa, #d946ef);
+      box-shadow: 0 0 12px rgba(96, 165, 250, 0.35);
     }
 
     .form-panel {
+      padding: 40px;
       display: grid;
-      gap: 22px;
+      gap: 24px;
     }
 
     .form-title {
-      margin: 0 0 6px;
-      font-size: 1.35rem;
+      margin: 0 0 10px;
+      font-size: 1.45rem;
       color: #ffffff;
     }
 
-    .form-description {
-      margin: 0 0 24px;
+    .form-text {
+      margin: 0;
       color: #94a3b8;
       line-height: 1.7;
+      max-width: 100%;
     }
 
-    .field-group {
-      display: grid;
-      gap: 16px;
-    }
-
-    label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #94a3b8;
-      margin-bottom: 8px;
-    }
-
-    .field,
-    textarea {
+    .field {
       width: 100%;
-      min-height: 48px;
-      padding: 16px;
+      padding: 18px 18px;
       border-radius: 18px;
       border: 1px solid rgba(148, 163, 184, 0.16);
-      background: rgba(15, 23, 42, 0.95);
-      color: #e2e8f0;
+      background: rgba(10, 18, 34, 0.98);
+      color: #e8f1ff;
       font-size: 1rem;
       font-family: inherit;
       outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
     }
 
-    textarea {
+    .field:hover,
+    .field:focus {
+      border-color: rgba(96, 165, 250, 0.55);
+      box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.12);
+      transform: translateY(-1px);
+    }
+
+    textarea.field {
       min-height: 140px;
       resize: vertical;
     }
 
-    .field:focus,
-    textarea:focus {
-      border-color: rgba(96, 165, 250, 0.7);
-      box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.12);
+    .action-row {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
     .submit-button {
-      width: 100%;
-      padding: 18px 20px;
+      padding: 18px 24px;
       border: none;
       border-radius: 18px;
-      background: linear-gradient(135deg, #60a5fa, #a855f7);
+      background: linear-gradient(135deg, #60a5fa, #d946ef);
       color: white;
       font-size: 1rem;
       font-weight: 700;
@@ -215,7 +215,7 @@
     .submit-button:hover,
     .submit-button:focus-visible {
       transform: translateY(-1px);
-      filter: brightness(1.05);
+      filter: brightness(1.07);
     }
 
     .status-message {
@@ -224,20 +224,38 @@
       min-height: 24px;
     }
 
-    @media (max-width: 860px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
+    .wave {
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 120%;
+      height: 120px;
+      background: radial-gradient(circle at 10% 20%, rgba(96, 165, 250, 0.18), transparent 20%),
+                  radial-gradient(circle at 80% 40%, rgba(236, 72, 153, 0.18), transparent 22%);
+      transform: translateX(-10%);
+      pointer-events: none;
     }
 
-    @media (max-width: 560px) {
-      .page {
-        padding: 24px 16px;
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
       }
 
       .hero-panel,
       .form-panel {
-        padding: 28px;
+        padding: 32px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page {
+        padding: 0;
+      }
+
+      .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
       }
     }
   </style>
@@ -245,32 +263,32 @@
 <body>
   <main class="page">
     <header class="top-bar">
-      <div class="brand">Target&RB</div>
-      <nav class="nav-links">
-        <a href="#request">Request</a>
-      </nav>
+      <div class="brand"><span>Target</span>&RB</div>
+      <a href="#request" class="nav-link">Request</a>
     </header>
 
-    <div class="hero-grid">
-      <section class="hero-panel">
-        <span class="eyebrow">Request form</span>
-        <h1 class="hero-title">Send your request to Target&RB</h1>
-        <p class="hero-text">Use this form to submit your request quickly. Enter a short subject and the details in Target Info. Your request will be forwarded securely to the configured recipient.</p>
+    <section class="main-grid">
+      <div class="hero-panel">
+        <span class="hero-eyebrow">Live request portal</span>
+        <h1 class="hero-title">Your request sent with style.</h1>
+        <p class="hero-subtitle">A fresh, bold interface with strong visual focus. Enter your request details and send them directly, without extra fields.</p>
 
-        <ul class="feature-list">
-          <li class="feature-item">Fast and clean request flow</li>
-          <li class="feature-item">No extra email field required</li>
-          <li class="feature-item">English interface only</li>
+        <ul class="hero-list">
+          <li>Quick subject + request details</li>
+          <li>Modern dark theme with neon highlights</li>
+          <li>Clean and sharp form interaction</li>
         </ul>
-      </section>
 
-      <section class="form-panel" id="request">
+        <div class="wave"></div>
+      </div>
+
+      <div class="form-panel" id="request">
         <div>
-          <h2 class="form-title">Send request</h2>
-          <p class="form-description">Fill in the fields below and click send. Your message will be delivered to the target address.</p>
+          <h2 class="form-title">Submit your request</h2>
+          <p class="form-text">Use the form below to share your request details. Once sent, it will be forwarded to the configured recipient directly.</p>
         </div>
 
-        <form id="request-form" class="field-group">
+        <form id="request-form" class="action-row">
           <div>
             <label for="user-input">Subject</label>
             <input id="user-input" name="subject" class="field" type="text" placeholder="Request subject" required />
@@ -278,14 +296,14 @@
 
           <div>
             <label for="reason-input-1">Target Info</label>
-            <textarea id="reason-input-1" name="reason1" class="field" placeholder="Describe your request" required></textarea>
+            <textarea id="reason-input-1" name="reason1" class="field" placeholder="Write your request details" required></textarea>
           </div>
 
           <button type="submit" class="submit-button">Send request</button>
           <p id="status-message" class="status-message"></p>
         </form>
-      </section>
-    </div>
+      </div>
+    </section>
   </main>
 
   <script>
@@ -312,7 +330,6 @@
             _template: 'table'
           })
         });
-
         var result = await response.json();
         if (response.ok && result.success) {
           statusText.textContent = 'Your request was sent successfully.';
