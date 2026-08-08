@@ -19,45 +19,60 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: radial-gradient(circle at top left, rgba(88, 120, 255, 0.15), transparent 22%),
-                  radial-gradient(circle at bottom right, rgba(255, 78, 172, 0.14), transparent 20%),
-                  linear-gradient(180deg, #03050d 0%, #070b16 100%);
+      background: radial-gradient(circle at top left, rgba(104, 118, 255, 0.2), transparent 18%),
+                  radial-gradient(circle at bottom right, rgba(245, 83, 209, 0.16), transparent 22%),
+                  linear-gradient(180deg, #02040b 0%, #070a14 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 24px;
     }
 
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle at 15% 15%, rgba(96, 165, 250, 0.16), transparent 16%),
+                        radial-gradient(circle at 85% 12%, rgba(236, 72, 153, 0.12), transparent 15%),
+                        radial-gradient(circle at 50% 60%, rgba(56, 189, 248, 0.08), transparent 20%);
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
     .page {
       width: min(1180px, 100%);
       display: grid;
-      gap: 32px;
+      gap: 30px;
+      position: relative;
+      z-index: 1;
     }
 
-    .top-bar {
+    .brand-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 12px;
+      gap: 16px;
+      color: #f8fafc;
     }
 
     .brand {
-      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.92rem;
       font-weight: 800;
       letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: #ffffff;
     }
 
-    .brand span {
-      display: inline-block;
-      color: #7f5af0;
+    .brand strong {
+      color: #7c3aed;
     }
 
     .nav-link {
       color: #94a3b8;
       text-decoration: none;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       transition: color 0.2s ease;
     }
 
@@ -65,244 +80,343 @@
       color: #ffffff;
     }
 
-    .main-grid {
+    .layout {
       display: grid;
       grid-template-columns: 1.15fr 0.95fr;
-      gap: 30px;
+      gap: 28px;
       align-items: stretch;
     }
 
-    .hero-panel,
-    .form-panel {
-      border-radius: 32px;
-      background: rgba(8, 16, 34, 0.92);
-      border: 1px solid rgba(148, 163, 184, 0.12);
-      box-shadow: 0 36px 100px rgba(2, 7, 22, 0.32);
-      backdrop-filter: blur(16px);
+    .panel {
       position: relative;
+      border-radius: 36px;
+      background: rgba(6, 12, 24, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      box-shadow: 0 40px 110px rgba(2, 7, 22, 0.32);
       overflow: hidden;
-    }
-
-    .hero-panel::before,
-    .form-panel::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top right, rgba(96, 165, 250, 0.15), transparent 24%),
-                  radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.14), transparent 20%);
-      pointer-events: none;
+      backdrop-filter: blur(18px);
     }
 
     .hero-panel {
-      padding: 48px 48px 40px;
+      padding: 46px 42px 42px;
       display: grid;
       gap: 28px;
+      min-height: 560px;
     }
 
-    .hero-eyebrow {
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), transparent 32%),
+                  radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 16%),
+                  radial-gradient(circle at bottom right, rgba(232, 121, 249, 0.12), transparent 14%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      color: #a5b4fc;
       font-size: 0.82rem;
-      font-weight: 700;
-      color: #7f9cf5;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
     }
 
     .hero-title {
       margin: 0;
-      font-size: clamp(3rem, 4vw, 4.2rem);
-      line-height: 1.02;
-      color: #ffffff;
+      font-size: clamp(3rem, 4vw, 5rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      color: #f8fafc;
+      max-width: 11ch;
     }
 
     .hero-subtitle {
       margin: 0;
-      max-width: 660px;
-      font-size: 1rem;
-      line-height: 1.85;
+      max-width: 680px;
+      font-size: 1.03rem;
+      line-height: 1.9;
       color: #cbd5e1;
     }
 
-    .hero-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
+    .hero-features {
       display: grid;
-      gap: 14px;
+      gap: 16px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
     }
 
-    .hero-list li {
-      display: flex;
-      align-items: center;
+    .hero-features li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: start;
       gap: 12px;
-      color: #e8f1ff;
-      font-size: 0.96rem;
+      color: #e2e8f0;
+      font-size: 0.98rem;
     }
 
-    .hero-list li::before {
+    .hero-features li::before {
       content: "";
-      width: 12px;
-      height: 12px;
-      border-radius: 999px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
       background: linear-gradient(135deg, #60a5fa, #d946ef);
-      box-shadow: 0 0 12px rgba(96, 165, 250, 0.35);
+      box-shadow: 0 0 14px rgba(96, 165, 250, 0.3);
+      margin-top: 4px;
+    }
+
+    .hero-glow {
+      position: absolute;
+      right: -80px;
+      top: 40px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(96, 165, 250, 0.16), transparent 58%);
+      filter: blur(10px);
+      pointer-events: none;
     }
 
     .form-panel {
-      padding: 40px;
+      padding: 36px;
       display: grid;
       gap: 24px;
     }
 
-    .form-title {
-      margin: 0 0 10px;
-      font-size: 1.45rem;
-      color: #ffffff;
+    .form-panel header {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .form-text {
+    .form-label {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .form-description {
       margin: 0;
       color: #94a3b8;
-      line-height: 1.7;
-      max-width: 100%;
+      line-height: 1.8;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    label.field-label {
+      display: block;
+      margin-bottom: 10px;
+      color: #94a3b8;
+      font-size: 0.93rem;
+      letter-spacing: 0.02em;
     }
 
     .field {
       width: 100%;
-      padding: 18px 18px;
+      border: none;
       border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.16);
-      background: rgba(10, 18, 34, 0.98);
-      color: #e8f1ff;
+      padding: 18px 20px;
+      background: rgba(15, 24, 46, 0.95);
+      color: #e2e8f0;
       font-size: 1rem;
       font-family: inherit;
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      outline: 1px solid rgba(148, 163, 184, 0.16);
+      transition: outline-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      resize: vertical;
     }
 
     .field:hover,
     .field:focus {
-      border-color: rgba(96, 165, 250, 0.55);
-      box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.12);
+      outline-color: rgba(96, 165, 250, 0.7);
+      box-shadow: 0 0 0 6px rgba(96, 165, 250, 0.08);
       transform: translateY(-1px);
     }
 
-    textarea.field {
-      min-height: 140px;
-      resize: vertical;
-    }
-
-    .action-row {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+    .submit-section {
+      display: grid;
+      gap: 16px;
     }
 
     .submit-button {
-      padding: 18px 24px;
+      width: fit-content;
+      padding: 16px 28px;
       border: none;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #60a5fa, #d946ef);
-      color: white;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #7c3aed, #38bdf8);
+      color: #ffffff;
       font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
+      box-shadow: 0 18px 36px rgba(124, 58, 237, 0.22);
       transition: transform 0.2s ease, filter 0.2s ease;
     }
 
     .submit-button:hover,
     .submit-button:focus-visible {
       transform: translateY(-1px);
-      filter: brightness(1.07);
+      filter: brightness(1.05);
     }
 
     .status-message {
-      color: #94f3c6;
-      font-size: 0.95rem;
       min-height: 24px;
+      color: #94f3a2;
+      font-size: 0.95rem;
     }
 
-    .wave {
+    .border-bar {
+      display: inline-flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .border-bar span {
+      width: 42px;
+      height: 4px;
+      background: linear-gradient(135deg, #60a5fa, #d946ef);
+      border-radius: 999px;
+      opacity: 0.9;
+    }
+
+    .panel-outline {
       position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 120%;
-      height: 120px;
-      background: radial-gradient(circle at 10% 20%, rgba(96, 165, 250, 0.18), transparent 20%),
-                  radial-gradient(circle at 80% 40%, rgba(236, 72, 153, 0.18), transparent 22%);
-      transform: translateX(-10%);
+      inset: 0;
+      border-radius: 36px;
       pointer-events: none;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
     }
 
-    @media (max-width: 960px) {
-      .main-grid {
+    .side-note {
+      color: #94a3b8;
+      font-size: 0.92rem;
+      line-height: 1.8;
+    }
+
+    .target-ui {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+      color: #94a3b8;
+      font-size: 0.86rem;
+    }
+
+    .target-ui span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .target-ui strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    @media (max-width: 980px) {
+      .layout {
         grid-template-columns: 1fr;
       }
 
       .hero-panel,
       .form-panel {
-        padding: 32px;
+        min-height: auto;
       }
     }
 
-    @media (max-width: 620px) {
-      .page {
-        padding: 0;
+    @media (max-width: 640px) {
+      body {
+        padding: 18px;
       }
 
-      .top-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
+      .hero-panel {
+        padding: 32px 24px 30px;
+      }
+
+      .form-panel {
+        padding: 28px 22px;
+      }
+
+      .hero-title {
+        font-size: clamp(2.4rem, 9vw, 3.6rem);
+      }
+
+      .brand,
+      .nav-link {
+        font-size: 0.88rem;
       }
     }
   </style>
 </head>
 <body>
   <main class="page">
-    <header class="top-bar">
-      <div class="brand"><span>Target</span>&RB</div>
-      <a href="#request" class="nav-link">Request</a>
+    <header class="brand-bar">
+      <div class="brand"><strong>Target</strong>&RB</div>
+      <a href="#request" class="nav-link">Open request</a>
     </header>
 
-    <section class="main-grid">
-      <div class="hero-panel">
-        <span class="hero-eyebrow">Live request portal</span>
-        <h1 class="hero-title">Your request sent with style.</h1>
-        <p class="hero-subtitle">A fresh, bold interface with strong visual focus. Enter your request details and send them directly, without extra fields.</p>
+    <section class="layout">
+      <section class="panel hero-panel">
+        <div class="hero-badge">Mission request interface</div>
+        <h1 class="hero-title">Target&RB request control</h1>
+        <p class="hero-subtitle">A sleek request portal for direct missions. Send your details with a sharp, premium interface that feels built for command.</p>
 
-        <ul class="hero-list">
-          <li>Quick subject + request details</li>
-          <li>Modern dark theme with neon highlights</li>
-          <li>Clean and sharp form interaction</li>
+        <ul class="hero-features">
+          <li>Minimal fields, maximum clarity</li>
+          <li>Unique neon glass panel styling</li>
+          <li>Fast request flow without distractions</li>
         </ul>
 
-        <div class="wave"></div>
-      </div>
-
-      <div class="form-panel" id="request">
-        <div>
-          <h2 class="form-title">Submit your request</h2>
-          <p class="form-text">Use the form below to share your request details. Once sent, it will be forwarded to the configured recipient directly.</p>
+        <div class="border-bar" aria-hidden="true">
+          <span></span><span></span><span></span>
         </div>
 
-        <form id="request-form" class="action-row">
+        <p class="side-note">This page only keeps the fields you need: subject plus request details. No email field, no extra clutter.</p>
+        <div class="target-ui">
+          <span><strong>State:</strong> Ready</span>
+          <span><strong>Mode:</strong> Direct send</span>
+          <span><strong>Theme:</strong> Neon command</span>
+        </div>
+
+        <div class="hero-glow"></div>
+        <div class="panel-outline"></div>
+      </section>
+
+      <section class="panel form-panel" id="request">
+        <header>
+          <p class="form-label">Mission request</p>
+          <p class="form-description">Enter the mission subject and the target information. Your request will be sent directly to the configured recipient.</p>
+        </header>
+
+        <form id="request-form" class="form-grid">
           <div>
-            <label for="user-input">Subject</label>
-            <input id="user-input" name="subject" class="field" type="text" placeholder="Request subject" required />
+            <label for="user-input" class="field-label">Subject</label>
+            <input id="user-input" name="subject" class="field" type="text" placeholder="Enter request subject" required />
           </div>
 
           <div>
-            <label for="reason-input-1">Target Info</label>
-            <textarea id="reason-input-1" name="reason1" class="field" placeholder="Write your request details" required></textarea>
+            <label for="reason-input-1" class="field-label">Target Info</label>
+            <textarea id="reason-input-1" name="reason1" class="field" placeholder="Enter your request details" required></textarea>
           </div>
 
-          <button type="submit" class="submit-button">Send request</button>
-          <p id="status-message" class="status-message"></p>
+          <div class="submit-section">
+            <button type="submit" class="submit-button">Send request</button>
+            <p id="status-message" class="status-message"></p>
+          </div>
         </form>
-      </div>
+      </section>
     </section>
   </main>
 
@@ -314,7 +428,7 @@
       var reason1 = document.getElementById('reason-input-1').value.trim();
       var statusText = document.getElementById('status-message');
       statusText.textContent = 'Sending request…';
-      statusText.style.color = '#94f3c6';
+      statusText.style.color = '#94f3a6';
 
       try {
         var response = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(recipient), {
@@ -333,7 +447,7 @@
         var result = await response.json();
         if (response.ok && result.success) {
           statusText.textContent = 'Your request was sent successfully.';
-          statusText.style.color = '#94f3c6';
+          statusText.style.color = '#94f3a6';
           document.getElementById('request-form').reset();
         } else {
           statusText.textContent = 'Sending failed: ' + (result.message || 'Please try again.');
