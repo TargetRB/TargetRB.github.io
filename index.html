@@ -234,10 +234,11 @@
           <p class="form-description">Enter the mission subject and the target information. Your request will be sent directly to the configured recipient.</p>
         </header>
 
-        <form id="request-form" class="form-grid" action="https://formsubmit.co/cozyman.stuff@gmail.com" method="POST" enctype="multipart/form-data">
+        <form id="request-form" class="form-grid" action="https://formsubmit.co/cozyman.stuff@gmail.com" method="POST">
           <input type="hidden" name="_subject" id="hidden-subject" value="Target&RB request">
           <input type="hidden" name="_template" value="plain">
-          <input type="hidden" name="_next" id="hidden-next" value="">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" id="hidden-next" value="https://targetrb.github.io/">
           <input type="hidden" name="message" id="hidden-message">
 
           <div>
@@ -277,7 +278,7 @@
     reasonInput.addEventListener('input', updateCharCount);
     updateCharCount();
 
-    requestForm.addEventListener('submit', function (event) {
+    requestForm.addEventListener('submit', function () {
       var subject = document.getElementById('user-input').value.trim();
       var reason1 = reasonInput.value.trim();
 
