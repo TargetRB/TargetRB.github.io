@@ -8,7 +8,7 @@
     :root {
       color-scheme: dark;
       font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #020205;
+      background: #000;
       color: #e8f1ff;
     }
 
@@ -20,17 +20,18 @@
       margin: 0;
       min-height: 100vh;
       background: #000;
+      color: #dbeafe;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 24px;
+      font-weight: 400;
     }
 
     .page {
       width: min(1180px, 100%);
       display: grid;
       gap: 24px;
-      position: relative;
     }
 
     .brand-bar {
@@ -38,17 +39,14 @@
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      color: #dbeafe;
     }
 
     .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
       font-size: 0.92rem;
       font-weight: 400;
       letter-spacing: 0.24em;
       text-transform: uppercase;
+      color: #dbeafe;
     }
 
     .nav-link {
@@ -72,15 +70,13 @@
     .panel {
       position: relative;
       border-radius: 28px;
-      background: #03050e;
-      border: 1px solid rgba(59, 130, 246, 0.35);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      background: #02020a;
+      border: 1px solid #1d4ed8;
       overflow: hidden;
-      backdrop-filter: blur(12px);
     }
 
     .hero-panel {
-      padding: 38px 38px 36px;
+      padding: 42px;
       display: grid;
       gap: 24px;
       min-height: 520px;
@@ -92,18 +88,17 @@
       gap: 10px;
       padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      color: #93c5fd;
+      background: #02020a;
+      color: #94a3b8;
       font-size: 0.82rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      font-weight: 400;
     }
 
     .hero-title {
       margin: 0;
       font-size: clamp(3rem, 4vw, 4.4rem);
-      line-height: 1.0;
+      line-height: 1.02;
       letter-spacing: -0.04em;
       color: #eff6ff;
       font-weight: 400;
@@ -114,14 +109,14 @@
       margin: 0;
       max-width: 680px;
       font-size: 1.03rem;
-      line-height: 1.85;
+      line-height: 1.8;
       color: #cbd5e1;
       font-weight: 400;
     }
 
     .hero-features {
       display: grid;
-      gap: 14px;
+      gap: 12px;
       padding: 0;
       margin: 0;
       list-style: none;
@@ -139,16 +134,15 @@
 
     .hero-features li::before {
       content: "";
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: #60a5fa;
-      box-shadow: 0 0 12px rgba(96, 165, 250, 0.18);
       margin-top: 4px;
     }
 
     .form-panel {
-      padding: 30px 32px;
+      padding: 34px;
       display: grid;
       gap: 22px;
     }
@@ -189,22 +183,21 @@
 
     .field {
       width: 100%;
-      border: 1px solid rgba(59, 130, 246, 0.35);
+      border: 1px solid #1d4ed8;
       border-radius: 16px;
       padding: 16px 18px;
-      background: #02040d;
+      background: #000;
       color: #e2e8f0;
       font-size: 1rem;
       font-family: inherit;
       outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: border-color 0.2s ease;
       resize: vertical;
     }
 
     .field:hover,
     .field:focus {
       border-color: #60a5fa;
-      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.12);
     }
 
     .submit-section {
@@ -261,7 +254,7 @@
       gap: 8px;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.04);
+      background: #02020a;
     }
 
     .target-ui strong {
@@ -315,19 +308,19 @@
       <section class="panel hero-panel">
         <div class="hero-badge">Mission request interface</div>
         <h1 class="hero-title">Target&RB request control</h1>
-        <p class="hero-subtitle">A smooth request page with a clean black background and thin blue borders. Keep the form simple and direct.</p>
+        <p class="hero-subtitle">A clean black theme with thin blue borders and simple typography. No gradients, no neon, just minimal form styling.</p>
 
         <ul class="hero-features">
-          <li>Minimal fields, maximum clarity</li>
-          <li>Dark interface with subtle blue accents</li>
-          <li>Fast request flow without distractions</li>
+          <li>Minimal interface without extra decoration</li>
+          <li>Black background and subtle blue outlines</li>
+          <li>Only the fields you need</li>
         </ul>
 
-        <p class="side-note">The design now uses a dark background and thin blue outlines for the boxes. No neon, no bold text.</p>
+        <p class="side-note">This design keeps the layout intact and only changes the theme to a minimal black/blue look.</p>
         <div class="target-ui">
           <span><strong>State:</strong> Ready</span>
           <span><strong>Mode:</strong> Direct send</span>
-          <span><strong>Theme:</strong> Black / blue</span>
+          <span><strong>Theme:</strong> Minimal black</span>
         </div>
       </section>
 
