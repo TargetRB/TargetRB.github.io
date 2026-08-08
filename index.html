@@ -276,23 +276,58 @@
       charCount.style.color = '#94a3b8';
     }
 
+    function breakLongWord(ctx, word, maxWidth) {
+      var pieces = [];
+      var segment = '';
+      for (var i = 0; i < word.length; i++) {
+        var next = segment + word[i];
+        if (ctx.measureText(next).width <= maxWidth) {
+          segment = next;
+        } else {
+          if (segment.length === 0) {
+            pieces.push(word[i]);
+          } else {
+            pieces.push(segment);
+            segment = word[i];
+          }
+        }
+      }
+      if (segment) pieces.push(segment);
+      return pieces;
+    }
+
     function wrapText(ctx, text, maxWidth) {
       var words = text.split(' ');
       var lines = [];
-      var currentLine = words[0] || '';
+      var currentLine = '';
 
-      for (var i = 1; i < words.length; i++) {
+      for (var i = 0; i < words.length; i++) {
         var word = words[i];
-        var width = ctx.measureText(currentLine + ' ' + word).width;
-        if (width < maxWidth) {
-          currentLine += ' ' + word;
+        var testLine = currentLine ? currentLine + ' ' + word : word;
+        var testWidth = ctx.measureText(testLine).width;
+
+        if (testWidth <= maxWidth) {
+          currentLine = testLine;
         } else {
-          lines.push(currentLine);
-          currentLine = word;
+          if (currentLine) {
+            lines.push(currentLine);
+          }
+          if (ctx.measureText(word).width > maxWidth) {
+            var broken = breakLongWord(ctx, word, maxWidth);
+            for (var j = 0; j < broken.length - 1; j++) {
+              lines.push(broken[j]);
+            }
+            currentLine = broken[broken.length - 1];
+          } else {
+            currentLine = word;
+          }
         }
       }
 
-      lines.push(currentLine);
+      if (currentLine) {
+        lines.push(currentLine);
+      }
+
       return lines;
     }
 
