@@ -238,7 +238,6 @@
           <input type="hidden" name="_subject" id="hidden-subject" value="Target&RB request">
           <input type="hidden" name="_template" value="plain">
           <input type="hidden" name="message" id="hidden-message">
-          <input type="hidden" name="attachment" id="hidden-attachment">
 
           <div>
             <label for="user-input" class="field-label">Subject</label>
@@ -287,14 +286,15 @@
       return new Blob([text], { type: 'text/plain' });
     }
 
-    function parseFormSubmitResponse(response) {
-      var contentType = response.headers.get('content-type') || '';
+    function parseFormSubmitResponse(responseText, contentType) {
       if (contentType.indexOf('application/json') !== -1) {
-        return response.json();
+        try {
+          return JSON.parse(responseText);
+        } catch (error) {
+          return null;
+        }
       }
-      return response.text().then(function (text) {
-        throw new Error('Server returned non-JSON response: ' + text.slice(0, 200));
-      });
+      return null;
     }
 
     reasonInput.addEventListener('input', updateCharCount);
@@ -328,7 +328,8 @@
       }
 
       try {
-        var response = await fetch(requestForm.action, {
+        var ajaxEndpoint = requestForm.action.replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
+        var response = await fetch(ajaxEndpoint, {
           method: 'POST',
           headers: {
             'Accept': 'application/json'
@@ -336,14 +337,22 @@
           body: formData
         });
 
-        var result = await parseFormSubmitResponse(response);
-        if (response.ok && result.success) {
+        var bodyText = await response.text();
+        var contentType = response.headers.get('content-type') || '';
+        var result = parseFormSubmitResponse(bodyText, contentType);
+
+        if (response.ok && result && result.success) {
           statusText.textContent = 'Your request was sent successfully.';
           statusText.style.color = '#94f3a6';
           requestForm.reset();
           updateCharCount();
+        } else if (response.ok && !contentType.includes('application/json')) {
+          statusText.textContent = 'Request sent. The server returned an unexpected response format, but your request may still have been received.';
+          statusText.style.color = '#94f3a6';
+          requestForm.reset();
+          updateCharCount();
         } else {
-          statusText.textContent = 'Sending failed: ' + (result.message || 'Please try again.');
+          statusText.textContent = 'Sending failed: ' + (result && result.message ? result.message : 'Please try again.');
           statusText.style.color = '#fca5a5';
         }
       } catch (error) {
