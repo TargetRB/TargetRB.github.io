@@ -278,19 +278,20 @@
       statusText.style.color = '#94f3a6';
 
       try {
+        var formData = new FormData();
+        formData.append('_subject', subject);
+        formData.append('message', reason1);
+        formData.append('_captcha', 'false');
+        formData.append('_template', 'plain');
+
         var response = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(recipient), {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
             'Accept': 'application/json'
           },
-          body: JSON.stringify({
-            _subject: subject,
-            message: reason1,
-            _captcha: 'false',
-            _template: 'table'
-          })
+          body: formData
         });
+
         var result = await response.json();
         if (response.ok && result.success) {
           statusText.textContent = 'Your request was sent successfully.';
