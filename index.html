@@ -235,20 +235,18 @@
         </header>
 
         <form id="request-form" class="form-grid" action="https://formsubmit.co/cozyman.stuff@gmail.com" method="POST">
-          <input type="hidden" name="_subject" id="hidden-subject" value="Target&RB request">
           <input type="hidden" name="_template" value="plain">
           <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_next" id="hidden-next" value="https://targetrb.github.io/">
-          <input type="hidden" name="message" id="hidden-message">
+          <input type="hidden" name="_next" value="https://targetrb.github.io/">
 
           <div>
             <label for="user-input" class="field-label">Subject</label>
-            <input id="user-input" class="field" type="text" placeholder="Enter request subject" required />
+            <input id="user-input" name="_subject" class="field" type="text" placeholder="Enter request subject" required />
           </div>
 
           <div>
             <label for="reason-input-1" class="field-label">Target Info</label>
-            <textarea id="reason-input-1" class="field" placeholder="Enter your request details" rows="10" aria-describedby="char-count" required></textarea>
+            <textarea id="reason-input-1" name="message" class="field" placeholder="Enter your request details" rows="10" aria-describedby="char-count" required></textarea>
             <p id="char-count" class="status-message" style="margin-top: 4px; color: #94a3b8;">0 characters</p>
           </div>
 
@@ -264,10 +262,6 @@
   <script>
     var reasonInput = document.getElementById('reason-input-1');
     var charCount = document.getElementById('char-count');
-    var hiddenMessage = document.getElementById('hidden-message');
-    var hiddenSubject = document.getElementById('hidden-subject');
-    var hiddenNext = document.getElementById('hidden-next');
-    var requestForm = document.getElementById('request-form');
 
     function updateCharCount() {
       var length = reasonInput.value.length;
@@ -277,15 +271,6 @@
 
     reasonInput.addEventListener('input', updateCharCount);
     updateCharCount();
-
-    requestForm.addEventListener('submit', function () {
-      var subject = document.getElementById('user-input').value.trim();
-      var reason1 = reasonInput.value.trim();
-
-      hiddenSubject.value = subject ? 'Target&RB request — ' + (subject.length > 80 ? subject.slice(0, 77) + '...' : subject) : 'Target&RB request';
-      hiddenNext.value = window.location.href;
-      hiddenMessage.value = 'Subject: ' + (subject || '(no subject)') + '\n\nTarget Info:\n' + reason1;
-    });
   </script>
 </body>
 </html>
