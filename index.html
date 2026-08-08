@@ -242,7 +242,7 @@
 
           <div>
             <label for="reason-input-1" class="field-label">Target Info</label>
-            <textarea id="reason-input-1" name="reason1" class="field" placeholder="Enter your request details" rows="10" aria-describedby="char-count" required></textarea>
+            <textarea id="reason-input-1" name="message" class="field" placeholder="Enter your request details" rows="10" aria-describedby="char-count" required></textarea>
             <p id="char-count" class="status-message" style="margin-top: 4px; color: #94a3b8;">0 characters</p>
           </div>
 
@@ -278,9 +278,12 @@
       statusText.style.color = '#94f3a6';
 
       try {
+        var finalSubject = subject ? 'Target&RB request — ' + (subject.length > 60 ? subject.slice(0, 57) + '...' : subject) : 'Target&RB request';
+        var messageBody = 'Subject: ' + (subject || '(no subject)') + '\n\nTarget Info:\n' + reason1;
+
         var formData = new URLSearchParams();
-        formData.append('_subject', subject);
-        formData.append('message', 'Subject: ' + subject + '\n\nTarget Info:\n' + reason1);
+        formData.append('_subject', finalSubject);
+        formData.append('message', messageBody);
         formData.append('_template', 'plain');
 
         var response = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(recipient), {
