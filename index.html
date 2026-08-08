@@ -20,7 +20,6 @@
       margin: 0;
       min-height: 100vh;
       background: #000;
-      color: #dbeafe;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -71,7 +70,7 @@
       position: relative;
       border-radius: 28px;
       background: #02020a;
-      border: 1px solid #1d4ed8;
+      border: 1px solid #2563eb;
       overflow: hidden;
     }
 
@@ -82,19 +81,6 @@
       min-height: 520px;
     }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: #02020a;
-      color: #94a3b8;
-      font-size: 0.82rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
     .hero-title {
       margin: 0;
       font-size: clamp(3rem, 4vw, 4.4rem);
@@ -103,42 +89,6 @@
       color: #eff6ff;
       font-weight: 400;
       max-width: 11ch;
-    }
-
-    .hero-subtitle {
-      margin: 0;
-      max-width: 680px;
-      font-size: 1.03rem;
-      line-height: 1.8;
-      color: #cbd5e1;
-      font-weight: 400;
-    }
-
-    .hero-features {
-      display: grid;
-      gap: 12px;
-      padding: 0;
-      margin: 0;
-      list-style: none;
-    }
-
-    .hero-features li {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      align-items: start;
-      gap: 10px;
-      color: #dbeafe;
-      font-size: 0.98rem;
-      font-weight: 400;
-    }
-
-    .hero-features li::before {
-      content: "";
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #60a5fa;
-      margin-top: 4px;
     }
 
     .form-panel {
@@ -183,7 +133,7 @@
 
     .field {
       width: 100%;
-      border: 1px solid #1d4ed8;
+      border: 1px solid #2563eb;
       border-radius: 16px;
       padding: 16px 18px;
       background: #000;
@@ -197,7 +147,7 @@
 
     .field:hover,
     .field:focus {
-      border-color: #60a5fa;
+      border-color: #3b82f6;
     }
 
     .submit-section {
@@ -208,7 +158,7 @@
     .submit-button {
       width: fit-content;
       padding: 14px 26px;
-      border: 1px solid #60a5fa;
+      border: 1px solid #3b82f6;
       border-radius: 14px;
       background: transparent;
       color: #e2e8f0;
@@ -220,7 +170,7 @@
 
     .submit-button:hover,
     .submit-button:focus-visible {
-      background-color: rgba(96, 165, 250, 0.08);
+      background-color: rgba(59, 130, 246, 0.08);
       transform: translateY(-1px);
     }
 
@@ -228,37 +178,6 @@
       min-height: 24px;
       color: #94f3a2;
       font-size: 0.95rem;
-      font-weight: 400;
-    }
-
-    .side-note {
-      color: #94a3b8;
-      font-size: 0.92rem;
-      line-height: 1.8;
-      font-weight: 400;
-    }
-
-    .target-ui {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 12px;
-      color: #94a3b8;
-      font-size: 0.86rem;
-      font-weight: 400;
-    }
-
-    .target-ui span {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: #02020a;
-    }
-
-    .target-ui strong {
-      color: #dbeafe;
       font-weight: 400;
     }
 
@@ -306,7 +225,6 @@
 
     <section class="layout">
       <section class="panel hero-panel">
-        <div class="hero-badge">Mission request interface</div>
         <h1 class="hero-title">Target&RB request control</h1>
       </section>
 
