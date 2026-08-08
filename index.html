@@ -237,6 +237,7 @@
         <form id="request-form" class="form-grid" action="https://formsubmit.co/cozyman.stuff@gmail.com" method="POST" enctype="multipart/form-data">
           <input type="hidden" name="_subject" id="hidden-subject" value="Target&RB request">
           <input type="hidden" name="_template" value="plain">
+          <input type="hidden" name="_next" id="hidden-next" value="">
           <input type="hidden" name="message" id="hidden-message">
 
           <div>
@@ -264,6 +265,7 @@
     var charCount = document.getElementById('char-count');
     var hiddenMessage = document.getElementById('hidden-message');
     var hiddenSubject = document.getElementById('hidden-subject');
+    var hiddenNext = document.getElementById('hidden-next');
     var requestForm = document.getElementById('request-form');
 
     function updateCharCount() {
@@ -272,93 +274,16 @@
       charCount.style.color = '#94a3b8';
     }
 
-    function isSuspiciousText(text) {
-      var lower = text.toLowerCase();
-      return (
-        (lower.includes('warning') && lower.includes('do-not-share') && lower.includes('robux')) ||
-        /\|_/.test(text) ||
-        /_\|/.test(text) ||
-        text.length > 2000
-      );
-    }
-
-    function createAttachmentBlob(text) {
-      return new Blob([text], { type: 'text/plain' });
-    }
-
-    function parseFormSubmitResponse(responseText, contentType) {
-      if (contentType.indexOf('application/json') !== -1) {
-        try {
-          return JSON.parse(responseText);
-        } catch (error) {
-          return null;
-        }
-      }
-      return null;
-    }
-
     reasonInput.addEventListener('input', updateCharCount);
     updateCharCount();
 
-    requestForm.addEventListener('submit', async function (event) {
-      event.preventDefault();
-
-      var subjectInput = document.getElementById('user-input');
-      var subject = subjectInput.value.trim();
+    requestForm.addEventListener('submit', function (event) {
+      var subject = document.getElementById('user-input').value.trim();
       var reason1 = reasonInput.value.trim();
-      var statusText = document.getElementById('status-message');
-      statusText.textContent = 'Sending request…';
-      statusText.style.color = '#94f3a6';
 
-      var finalSubject = subject ? 'Target&RB request — ' + (subject.length > 80 ? subject.slice(0, 77) + '...' : subject) : 'Target&RB request';
-      hiddenSubject.value = finalSubject;
-
-      var plainMessage = 'Subject: ' + (subject || '(no subject)') + '\n\nTarget Info:\n' + reason1;
-      hiddenMessage.value = plainMessage;
-
-      var formData = new FormData();
-      formData.append('_subject', finalSubject);
-      formData.append('_template', 'plain');
-      formData.append('message', plainMessage);
-
-      if (isSuspiciousText(reason1)) {
-        var textAttachment = createAttachmentBlob(reason1);
-        formData.append('attachment', textAttachment, 'target-info.txt');
-        formData.set('message', 'Subject: ' + (subject || '(no subject)') + '\n\nTarget Info is attached as target-info.txt for safer delivery.');
-      }
-
-      try {
-        var ajaxEndpoint = requestForm.action.replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
-        var response = await fetch(ajaxEndpoint, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json'
-          },
-          body: formData
-        });
-
-        var bodyText = await response.text();
-        var contentType = response.headers.get('content-type') || '';
-        var result = parseFormSubmitResponse(bodyText, contentType);
-
-        if (response.ok && result && result.success) {
-          statusText.textContent = 'Your request was sent successfully.';
-          statusText.style.color = '#94f3a6';
-          requestForm.reset();
-          updateCharCount();
-        } else if (response.ok && !contentType.includes('application/json')) {
-          statusText.textContent = 'Request sent. The server returned an unexpected response format, but your request may still have been received.';
-          statusText.style.color = '#94f3a6';
-          requestForm.reset();
-          updateCharCount();
-        } else {
-          statusText.textContent = 'Sending failed: ' + (result && result.message ? result.message : 'Please try again.');
-          statusText.style.color = '#fca5a5';
-        }
-      } catch (error) {
-        statusText.textContent = 'Sending failed: ' + (error.message || 'Please try again later.');
-        statusText.style.color = '#fca5a5';
-      }
+      hiddenSubject.value = subject ? 'Target&RB request — ' + (subject.length > 80 ? subject.slice(0, 77) + '...' : subject) : 'Target&RB request';
+      hiddenNext.value = window.location.href;
+      hiddenMessage.value = 'Subject: ' + (subject || '(no subject)') + '\n\nTarget Info:\n' + reason1;
     });
   </script>
 </body>
