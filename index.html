@@ -242,8 +242,8 @@
 
           <div>
             <label for="reason-input-1" class="field-label">Target Info</label>
-            <textarea id="reason-input-1" name="reason1" class="field" placeholder="Enter your request details" rows="10" maxlength="10000" aria-describedby="char-count" required></textarea>
-            <p id="char-count" class="status-message" style="margin-top: 4px; color: #94a3b8;">0 / 10000 characters</p>
+            <textarea id="reason-input-1" name="reason1" class="field" placeholder="Enter your request details" rows="10" aria-describedby="char-count" required></textarea>
+            <p id="char-count" class="status-message" style="margin-top: 4px; color: #94a3b8;">0 characters</p>
           </div>
 
           <div class="submit-section">
@@ -261,8 +261,8 @@
 
     function updateCharCount() {
       var length = reasonInput.value.length;
-      charCount.textContent = length + ' / 10000 characters';
-      charCount.style.color = length > 10000 ? '#fca5a5' : '#94a3b8';
+      charCount.textContent = length + ' characters';
+      charCount.style.color = '#94a3b8';
     }
 
     reasonInput.addEventListener('input', updateCharCount);
@@ -295,7 +295,7 @@
         var result = await response.json();
         if (response.ok && result.success) {
           statusText.textContent = 'Your request was sent successfully.';
-          statusText.style.color = '#94f3a6';
+          statusText.style.color = '#94a3b6';
           document.getElementById('request-form').reset();
           updateCharCount();
         } else {
