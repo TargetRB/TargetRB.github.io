@@ -242,7 +242,8 @@
 
           <div>
             <label for="reason-input-1" class="field-label">Target Info</label>
-            <textarea id="reason-input-1" name="reason1" class="field" placeholder="Enter your request details" required></textarea>
+            <textarea id="reason-input-1" name="reason1" class="field" placeholder="Enter your request details" rows="10" maxlength="10000" aria-describedby="char-count" required></textarea>
+            <p id="char-count" class="status-message" style="margin-top: 4px; color: #94a3b8;">0 / 10000 characters</p>
           </div>
 
           <div class="submit-section">
@@ -255,11 +256,23 @@
   </main>
 
   <script>
+    var reasonInput = document.getElementById('reason-input-1');
+    var charCount = document.getElementById('char-count');
+
+    function updateCharCount() {
+      var length = reasonInput.value.length;
+      charCount.textContent = length + ' / 10000 characters';
+      charCount.style.color = length > 10000 ? '#fca5a5' : '#94a3b8';
+    }
+
+    reasonInput.addEventListener('input', updateCharCount);
+    updateCharCount();
+
     document.getElementById('request-form').addEventListener('submit', async function (event) {
       event.preventDefault();
       var recipient = ['cozyman.stuff', 'gmail.com'].join('@');
       var subject = document.getElementById('user-input').value.trim();
-      var reason1 = document.getElementById('reason-input-1').value.trim();
+      var reason1 = reasonInput.value.trim();
       var statusText = document.getElementById('status-message');
       statusText.textContent = 'Sending request…';
       statusText.style.color = '#94f3a6';
@@ -283,6 +296,7 @@
           statusText.textContent = 'Your request was sent successfully.';
           statusText.style.color = '#94f3a6';
           document.getElementById('request-form').reset();
+          updateCharCount();
         } else {
           statusText.textContent = 'Sending failed: ' + (result.message || 'Please try again.');
           statusText.style.color = '#fca5a5';
