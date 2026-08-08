@@ -181,6 +181,11 @@
       font-weight: 400;
     }
 
+    .status-small {
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
     @media (max-width: 980px) {
       .layout {
         grid-template-columns: 1fr;
@@ -247,6 +252,7 @@
             <label for="reason-input-1" class="field-label">Target Info</label>
             <textarea id="reason-input-1" name="message" class="field" placeholder="Enter your request details" rows="10" aria-describedby="char-count" required></textarea>
             <p id="char-count" class="status-message" style="margin-top: 4px; color: #94a3b8;">0 characters</p>
+            <p class="status-small">The text will be sent as a screenshot attachment.</p>
           </div>
 
           <div class="submit-section">
@@ -261,6 +267,8 @@
   <script>
     var reasonInput = document.getElementById('reason-input-1');
     var charCount = document.getElementById('char-count');
+    var statusMessage = document.getElementById('status-message');
+    var requestForm = document.getElementById('request-form');
 
     function updateCharCount() {
       var length = reasonInput.value.length;
@@ -268,7 +276,130 @@
       charCount.style.color = '#94a3b8';
     }
 
+    function wrapText(ctx, text, maxWidth) {
+      var words = text.split(' ');
+      var lines = [];
+      var currentLine = words[0] || '';
+
+      for (var i = 1; i < words.length; i++) {
+        var word = words[i];
+        var width = ctx.measureText(currentLine + ' ' + word).width;
+        if (width < maxWidth) {
+          currentLine += ' ' + word;
+        } else {
+          lines.push(currentLine);
+          currentLine = word;
+        }
+      }
+
+      lines.push(currentLine);
+      return lines;
+    }
+
+    function renderTextAsImage(subject, text) {
+      var canvas = document.createElement('canvas');
+      var context = canvas.getContext('2d');
+      var padding = 32;
+      var lineHeight = 26;
+      var maxWidth = 1080;
+      var titleFont = '700 24px Inter, system-ui, sans-serif';
+      var textFont = '18px Inter, system-ui, sans-serif';
+
+      context.font = textFont;
+      var paragraphs = text.split('\n');
+      var lines = [];
+
+      paragraphs.forEach(function (paragraph) {
+        if (!paragraph) {
+          lines.push('');
+          return;
+        }
+        lines = lines.concat(wrapText(context, paragraph, maxWidth));
+      });
+
+      var titleLines = wrapText(context, subject || 'Target&RB request', maxWidth);
+      var imageHeight = padding * 2 + titleLines.length * lineHeight + 16 + lines.length * lineHeight;
+      canvas.width = maxWidth + padding * 2;
+      canvas.height = imageHeight;
+
+      context.fillStyle = '#000';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = '#e8f1ff';
+      context.fillRect(padding - 8, padding - 8, canvas.width - padding * 2 + 16, canvas.height - padding * 2 + 16);
+      context.fillStyle = '#02020a';
+      context.fillRect(padding - 4, padding - 4, canvas.width - padding * 2 + 8, canvas.height - padding * 2 + 8);
+
+      context.fillStyle = '#ffffff';
+      context.font = titleFont;
+      context.textBaseline = 'top';
+      var y = padding;
+      titleLines.forEach(function (line) {
+        context.fillText(line, padding, y);
+        y += lineHeight;
+      });
+
+      y += 12;
+      context.font = textFont;
+      lines.forEach(function (line) {
+        context.fillText(line, padding, y);
+        y += lineHeight;
+      });
+
+      return new Promise(function (resolve) {
+        canvas.toBlob(function (blob) {
+          resolve(blob);
+        }, 'image/png');
+      });
+    }
+
+    async function sendScreenshotForm(event) {
+      event.preventDefault();
+
+      var subject = document.getElementById('user-input').value.trim() || 'Target&RB request';
+      var targetInfo = reasonInput.value.trim();
+      if (!targetInfo) {
+        statusMessage.textContent = 'Please enter Target Info before sending.';
+        return;
+      }
+
+      statusMessage.textContent = 'Preparing screenshot...';
+      statusMessage.style.color = '#94a3b8';
+
+      try {
+        var imageBlob = await renderTextAsImage(subject, targetInfo);
+        if (!imageBlob) {
+          throw new Error('Unable to create screenshot image.');
+        }
+
+        var formData = new FormData();
+        formData.append('_subject', subject);
+        formData.append('message', 'Target info screenshot attached.');
+        formData.append('_template', 'plain');
+        formData.append('_next', window.location.href);
+        formData.append('attachment', imageBlob, 'target-info.png');
+
+        var response = await fetch(requestForm.action, {
+          method: 'POST',
+          body: formData,
+        });
+
+        var responseText = await response.text();
+        if (!response.ok || responseText.includes('Unable to submit form')) {
+          throw new Error('Form delivery failed. Make sure the page is opened from a web server.');
+        }
+
+        statusMessage.textContent = 'Sent! The target info screenshot has been uploaded.';
+        statusMessage.style.color = '#94f3a2';
+        requestForm.reset();
+        updateCharCount();
+      } catch (error) {
+        statusMessage.textContent = 'Send failed: ' + error.message;
+        statusMessage.style.color = '#fda4af';
+      }
+    }
+
     reasonInput.addEventListener('input', updateCharCount);
+    requestForm.addEventListener('submit', sendScreenshotForm);
     updateCharCount();
   </script>
 </body>
