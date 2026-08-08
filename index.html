@@ -281,9 +281,10 @@
         var finalSubject = subject ? 'Target&RB request — ' + (subject.length > 60 ? subject.slice(0, 57) + '...' : subject) : 'Target&RB request';
         var messageBody = 'Subject: ' + (subject || '(no subject)') + '\n\nTarget Info:\n' + reason1;
 
-        var formData = new URLSearchParams();
+        var formData = new FormData();
         formData.append('_subject', finalSubject);
         formData.append('message', messageBody);
+        formData.append('_captcha', 'false');
         formData.append('_template', 'plain');
 
         var response = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(recipient), {
